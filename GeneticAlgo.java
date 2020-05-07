@@ -47,6 +47,9 @@ public class SimpleDemoGA {
             //Calculate new fitness value
             demo.population.calculateFitness();
 
+            System.out.println("After All Of the Process , The Population Now looks like this :");
+            demo.population.getPopulation();
+
             System.out.println("Generation: " + demo.generationCount + " Fittest: " + demo.population.fittest);
         }
 
@@ -66,9 +69,13 @@ public class SimpleDemoGA {
 
         //Select the most fittest individual
         fittest = population.getFittest();
+        System.out.println("In The Selection Process , The Fittest Individual is :");
+        fittest.showIndividual();
 
         //Select the second most fittest individual
         secondFittest = population.getSecondFittest();
+        System.out.println ("In The SelectionProcess, The Second Fittest Individual is :");
+        secondFittest.showIndividual();
     }
 
     //Crossover
@@ -83,8 +90,12 @@ public class SimpleDemoGA {
             int temp = fittest.genes[i];
             fittest.genes[i] = secondFittest.genes[i];
             secondFittest.genes[i] = temp;
-
         }
+        System.out.println("In The CrossOver Process , The CrossOver , We Got is :");
+        System.out.println("Fittest One CrossOvered");
+        fittest.showIndividual();
+        System.out.println("Second Fittest One CrossOvered ");
+        secondFittest.showIndividual();
 
     }
 
@@ -102,6 +113,9 @@ public class SimpleDemoGA {
             fittest.genes[mutationPoint] = 0;
         }
 
+        System.out.println("The Mutated Fittest One Looks Like");
+        fittest.showIndividual();
+
         mutationPoint = rn.nextInt(population.individuals[0].geneLength);
 
         if (secondFittest.genes[mutationPoint] == 0) {
@@ -109,6 +123,10 @@ public class SimpleDemoGA {
         } else {
             secondFittest.genes[mutationPoint] = 0;
         }
+
+        System.out.println("The Mutated Fittest Two Looks Like");
+        secondFittest.showIndividual();
+
     }
 
     //Get fittest offspring
@@ -130,8 +148,13 @@ public class SimpleDemoGA {
         //Get index of least fit individual
         int leastFittestIndex = population.getLeastFittestIndex();
 
+        System.out.println("The Least Fittest Guy Looks like");
+        population.individuals[leastFittestIndex].showIndividual();
+
         //Replace least fittest individual from most fittest offspring
         population.individuals[leastFittestIndex] = getFittestOffspring();
+        System.out.println("After Survival Instincts Have Been Checked It Looks Like");
+        population.individuals[leastFittestIndex].showIndividual();
     }
 
 }
@@ -200,6 +223,11 @@ class Population {
             }
         }
         fittest = individuals[maxFitIndex].fitness;
+        System.out.println("The Fittest Among All is ");
+
+        //Showing The Fittest Individual
+        individuals[maxFitIndex].showIndividual();
+
         return individuals[maxFitIndex];
     }
 
@@ -242,9 +270,11 @@ class Population {
     }
 
     public void getPopulation(){
+        System.out.println("The Population Constructed is as Follows ");
         for (int i = 0 ; i < individuals.length ; i++){
             individuals[i].showIndividual();
         }
+        System.out.print("\n");
     }
 
 }
