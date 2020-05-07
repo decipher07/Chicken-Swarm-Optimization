@@ -1,11 +1,6 @@
 
 import java.util.Random;
 
-/**
- *
- * @author Vijini
- */
-
 //Main class
 public class SimpleDemoGA {
 
@@ -25,6 +20,9 @@ public class SimpleDemoGA {
 
         //Calculate fitness of each individual
         demo.population.calculateFitness();
+
+        //Show The Population
+        demo.population.getPopulation();
 
         System.out.println("Generation: " + demo.generationCount + " Fittest: " + demo.population.fittest);
 
@@ -168,6 +166,13 @@ class Individual {
         }
     }
 
+    public void showIndividual() {
+        for (int i = 0 ; i < 5 ; i++){
+            System.out.print(genes[i]);
+        }
+        System.out.println("\n");
+    }
+
 }
 
 //Population class
@@ -233,8 +238,14 @@ class Population {
             individuals[i].calcFitness();
         }
         getFittest();
+        //getSecondFittest();
+    }
+
+    public void getPopulation(){
+        for (int i = 0 ; i < individuals.length ; i++){
+            individuals[i].showIndividual();
+        }
     }
 
 }
 //
-//     view rawSimpleDemoGA.java hosted with ❤ by GitHub
