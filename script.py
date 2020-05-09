@@ -8,7 +8,8 @@ from sklearn.datasets import make_classification
 
 ds = py.read_csv('kag_risk_factors_cervical_cancer.csv')
 
-print(ds)
+
+print(ds.iloc[:])
 
 r = np.random.random(32)
 # print(r)
