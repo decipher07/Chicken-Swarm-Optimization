@@ -143,7 +143,7 @@ class Chicken :
             # Check if the Rooster of that Group Matches , Our Hens Group or Not
             # Since According to Segragation of The Population in Group , It is meant that eqaul Population will be shared
             if rooster[index].group == self.group :
-                position_rooster_1 = rooster[index].position # Same Group Rooster Position
+                position_rooster_1 = rooster[index].original_position # Same Group Rooster Position
                 fitness_rooster_1 = rooster[index].fitness # Same Group Rooster Health
 
         # Generating A Random Number in range of Groups
@@ -153,7 +153,7 @@ class Chicken :
             random_number_between_the_total_number_of_groups = np.random.randint(0, number_of_groups_the_swarm_is_divided) ## More not Getting the same Rooster Group
 
         if rooster[random_number_between_the_total_number_of_groups].group != self.group :
-            position_rooster_2 = rooster[random_number_between_the_total_number_of_groups].position # Some  K Rooster Index
+            position_rooster_2 = rooster[random_number_between_the_total_number_of_groups].original_position # Some  K Rooster Index
             fitness_rooster_2 = rooster[random_number_between_the_total_number_of_groups].fitness # Some K Rooster's Fitness
 
         fitness_current_hen = self.fitness #Fitness of Current Hen
@@ -192,6 +192,13 @@ class Chicken :
     The Class Takes 3 Arguments for the constructor , ie , The Population, Maximum Generation and Index to which Every Update Needs to Take Place to Establish A New Group .The Later Steps Involve Initalizing The Data and Make Segragation for Rooster, Hen And Chicken based on the Group .
 
 '''
+
+'''
+    To Update The Binary Value and Checking its Crossover , We Will define a function as to one which yields certain range of value between 0 and 1 and then we need to compare It with Random value interepreted to change the Values .
+'''
+
+def function_returning_values_between_0_and_1 (x): #float
+    return 1 / ( 1 + math.exp(-x))
 
 
 class ImplementingChickenSwarmOptimization :
@@ -269,8 +276,6 @@ class ImplementingChickenSwarmOptimization :
                 '''
                     For Establishing a Relationship for Hen And Mother , We would keep track of the index of the Mother hen . Since we need to randomize the solution to predict an Optimized Result , Therefore we would Store it in an array to which the index belongs to .
                 '''
-                array_for_storing_index_of_particular_hen_to_which_the_chick_belongs_to = np.zeros(population)
-
 
                 for index in range(number_of_groups_the_swarm_is_divided, 3*number_of_groups_the_swarm_is_divided): #2, 3, 4, 5 in case of Example 10
                     # For Assigining Each Group That We can Assign the Hen .
@@ -309,15 +314,57 @@ class ImplementingChickenSwarmOptimization :
                         population_list[random_integer_for_mapping_chicks].group = random_integer_between_the_total_number_of_groups_we_can_have_minus_1+1
                     # Error Zone : Ends
 
-                print("Fitness is : ", population_list[iteration_test_cases].fitness)
+                for i in range (0, population):
+                    print ("Fitness is ", population_list[i].fitness)
                 print ("The Roosters Count is : ", roosters_in_each_group_counter, "The Hen Count is : ", hens_in_each_group_counter, "The Chick Count is ", chicks_in_each_group_counter)
                 print ("The Group List Looks like ", group_list_containing_which_group_belongs)
 
 
 
 
+
             #### It Starts Here!!!!#####
+            '''
+                Once All The Roosters, Chickens and Hens are Initalized , We need to Update The Location for Every Fall Iteration Allowed in the Loop
+            '''
+
+            for index in range (0, population):
+
+                if (population_list[index].species_name == "Rooster"):
+                    print("The Chicken is a Rooster at index ", index)
+                    population_list[index].update_location_rooster(number_of_groups_the_swarm_is_divided, rooster_class)
+                elif (population_list[index].species_name == "Hen"):
+                    print("The Chicken is a Hen at index ", index)
+                    population_list[index].update_location_hen(number_of_groups_the_swarm_is_divided, rooster_class)
+                elif (population_list[index].species_name == "Chick"):
+                    print("The Chicken is a Chick at index ", index)
+                    mother_hen_index = int(group_list_containing_which_group_belongs[index])
+                    position_of_mother_hen = population_list[mother_hen_index].original_position
+
+                    population_list[index].update_location_chick(FL, position_of_mother_hen)
+
+
+                '''
+                Now Updation of the Value based on the fitness is needed as of now , Thereis No Particular Option to Change the All the feature Index , So We will have to Evaluate it Using a function and needs to compare it for fitness
+                '''
+
+                for iteration_to_features in range (0, Dn):
+                    if (function_returning_values_between_0_and_1(population_list[index].next_position_to_which_chicken_will_move[iteration_to_features]) > np.random.random()):
+                        population_list[index].sample_chicken_comparing_stack[0][iteration_to_features] = 1
+                    else :
+                        population_list[index].sample_chicken_comparing_stack[0][iteration_to_features] = 0
+
+                if fitness_function(population_list[index].sample_chicken_comparing_stack) > population_list[index].fitness:
+                    print("A Better Fitness Function is Found !!")
+                    print ("The Original Fitness Value for the ", population_list[index].fitness, " for the Solution as ", population_list[index].original_chicken_string)
+                    population_list[index].evaluate()
+                    print ("The Fittest One is as Follows ", population_list[index].original_chicken_string)
+                    ## Sorting For Finding If It Can Be the Best
+                    population_list.sort(key = lambda x : x.fitness , reverse = True)
+
+
             iteration_test_cases += 1
+
 
 
 ImplementingChickenSwarmOptimization(10, 10, 2, 0.5)
