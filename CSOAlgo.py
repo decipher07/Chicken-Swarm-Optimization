@@ -92,4 +92,21 @@ class Chicken :
         self.original_chicken_string = self.sample_chicken_comparing_stack
         self.fitness = fitness_function(self.original_chicken_string)
     
-    
+    ''' 
+        Group of Functions which need to update the position of Chickens.
+        Note : The Position will be first stored in a different property ie next_position_to_which_chicken_will_move will store the next address . Moving on the lane , The Fitness Count Obtained from new Generation will help in Updating the solution 
+    '''
+
+    ''' 
+        All the Functions will take in a parameter as The Number of Groups the Population is Divied into , For Example , If the Total Population is 10 , The best suited Group will be 10/5 , ie 2. All the Roosters will be then updated to the count of the following Appropriate Distribution 
+    '''
+
+    def update_location_rooster(self, number_of_groups_the_swarm_is_divided, rooster): # Integer , Class Rooster
+        random_number_between_the_total_number_of_groups = np.random.randint(0, number_of_groups_the_swarm_is_divided) # Example as Like if the Population is divided into 2 Groups , and then Total Option is Limited to either 0 or 1 , 0 for the First Group and 1 For Other Group 
+
+        while (rooster[random_number_between_the_total_number_of_groups].group == self.group):
+            ## Checking If It doesnt' Belong to the same Group 
+            random_number_between_the_total_number_of_groups = np.random.randint(0, number_of_groups_the_swarm_is_divided) 
+        
+        ### Evaluating The Different Function 
+
