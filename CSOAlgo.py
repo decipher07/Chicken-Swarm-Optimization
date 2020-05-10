@@ -225,7 +225,7 @@ class ImplementingChickenSwarmOptimization :
 
             ### Group === Knowing Which Chicken Belongs to Which Group . Can Either be Done Through Going through each class and getting Group Number it Belongs to.
 
-            group_list_containing_which_group_belongs = np.zeros((population))
+            group_list_containing_which_group_belongs = np.zeros(population)
 
             for index in range (number_of_groups_the_swarm_is_divided):
                   population_list[index].species_name = "Rooster" # Example of 10, First  2 being Roosters
@@ -234,9 +234,27 @@ class ImplementingChickenSwarmOptimization :
 
             # Assigning Hens in the Group
             for index in range (number_of_groups_the_swarm_is_divided, (population - 2*number_of_groups_the_swarm_is_divided)):
-                population_list[index].species_name = "Hen" # Example of 10 , index of 2,3,4,5 being Hens 
+                population_list[index].species_name = "Hen" # Example of 10 , index of 2,3,4,5 being Hens
+
+            '''
+                Based on the Total Population , The Population is divided into Group of 5 lets suppose. Now To each Group , We will have 1 Head Rooster , 2 Hens and 2 Chicks . Now , The Algorithm Validates to the  Position being Updated for each Row and The Validation successfully yields the nature Criteria for Identifying Weak as well as Strong . Thereby Performing Swarm Optimization
+            '''
+
+            # In Example of 10 , With 2 Groups [ 0. , 0.  ]
+            roosters_in_each_group = np.zeros(number_of_groups_the_swarm_is_divided)
+            hens_in_each_group = np.zeros(number_of_groups_the_swarm_is_divided)
+            chicks_in_each_group = np.zeros(number_of_groups_the_swarm_is_divided)
 
 
+            '''
+                To Assign Roosters and Hens And Chickens , We will Try to Randomize as much as Possible , failing of which will indicate the Gain of a particular group every Time , Thereby Hampering Our Solution.
+            '''
+
+            # Assigning Roosters in the Group
+
+            for index in range(number_of_groups_the_swarm_is_divided): # For Example of 10 , The index 0 and 1
+                random_integer_between_the_max_number_of_rooster_we_can_have_minus_1 = np.random.randint(0, number_of_groups_the_swarm_is_divided)
+                
 
 
             print("Fitness is : ", population_list[iteration_test_cases].fitness)
