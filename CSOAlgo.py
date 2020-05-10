@@ -261,7 +261,7 @@ class ImplementingChickenSwarmOptimization :
 
                 ## Putting it in an If statement , to Not Get any Undefined Declaration
                 if roosters_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] < 1 :
-                    population_list[index].group = random_integer_between_the_total_number_of_groups_we_can_have_minus_1 + 1 #Going into The Index of Object , Then Accessing Group and Incrementing It
+                    population_list[index].group = random_integer_between_the_total_number_of_groups_we_can_have_minus_1 + 1 #Going into The Index of Object , Then Accessing Group and Updating It
                     roosters_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] += 1 #Updating the Value at each Index ie in [0 , 0], if the random number is 1 then It will be [1, 0] for rooster count
                     group_list_containing_which_group_belongs[index] = random_integer_between_the_total_number_of_groups_we_can_have_minus_1+1 #Updating The Group List to avoid Getting into each Object Properties to get the Group Number
 
@@ -275,9 +275,22 @@ class ImplementingChickenSwarmOptimization :
             for index in range(number_of_groups_the_swarm_is_divided, 3*number_of_groups_the_swarm_is_divided): #2, 3, 4, 5 in case of Example 10
                 # For Assigining Each Group That We can Assign the Hen .
                 random_integer_between_the_total_number_of_groups_we_can_have_minus_1 = np.random.randint(0, number_of_groups_the_swarm_is_divided)
+
+                # Checking If the Not More than 2 Hens Exist In the same Group , In Our Case [ 0, 3] is not Possible
+                while hens_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] >= 2:
+                    random_integer_between_the_total_number_of_groups_we_can_have_minus_1= np.random.randint(0, number_of_groups_the_swarm_is_divided)
+
+
+                if hens_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] < 2 :
+                    population_list[index].group = random_integer_between_the_total_number_of_groups_we_can_have_minus_1 + 1 # Going into Index , then Updating the Property Group so That In case for our Example 0 and 1 become Group 1 and Group 2
+                    group_list_containing_which_group_belongs[index] = random_integer_between_the_total_number_of_groups_we_can_have_minus_1+1 # Updating the same in group list to make it easy for iterating in the later step
+                    hens_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] += 1 # Upating [0,0] to [1, 0]
+
+                '''
+                    The Next Process involves Mapping Mother Hen to Chicks in the Population , Therefore we Need to Randomize An Integer between 6, 7, 8, 9 , So that Mapping Occurs for Chicks and Not For Hens in the List
+                '''
+
                 
-
-
 
 
 
