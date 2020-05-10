@@ -218,90 +218,105 @@ class ImplementingChickenSwarmOptimization :
             if (iteration_test_cases%self_update_time == 0):
                 population_list.sort(key = lambda x : x.fitness , reverse = True)
 
-            # Assigning The Members Equally in a Group
-            rooster_class = population_list[:number_of_groups_the_swarm_is_divided] # Assigning Equal Number of Roosters to Each Group
-            chicks_class = population_list[-(2*number_of_groups_the_swarm_is_divided)] # Assigning the Last Remaining Classes as Chick
-            hens_class = population_list[-(population - number_of_groups_the_swarm_is_divided) : -(2*number_of_groups_the_swarm_is_divided)]
+                # Assigning The Members Equally in a Group
+                rooster_class = population_list[:number_of_groups_the_swarm_is_divided] # Assigning Equal Number of Roosters to Each Group
+                chicks_class = population_list[-(2*number_of_groups_the_swarm_is_divided)] # Assigning the Last Remaining Classes as Chick
+                hens_class = population_list[-(population - number_of_groups_the_swarm_is_divided) : -(2*number_of_groups_the_swarm_is_divided)]
 
-            ### Group === Knowing Which Chicken Belongs to Which Group . Can Either be Done Through Going through each class and getting Group Number it Belongs to.
+                ### Group === Knowing Which Chicken Belongs to Which Group . Can Either be Done Through Going through each class and getting Group Number it Belongs to.
 
-            group_list_containing_which_group_belongs = np.zeros(population)
+                group_list_containing_which_group_belongs = np.zeros(population)
 
-            for index in range (number_of_groups_the_swarm_is_divided):
-                  population_list[index].species_name = "Rooster" # Example of 10, First  2 being Roosters
-                  population_list[-1-index].species_name = "Chick" # Example of 10 , index 9,8 being Chicks
-                  population_list[-3-index].species_name = "Chick" # Example of 10 , index 7,6 being Chicks
+                for index in range (number_of_groups_the_swarm_is_divided):
+                      population_list[index].species_name = "Rooster" # Example of 10, First  2 being Roosters
+                      population_list[-1-index].species_name = "Chick" # Example of 10 , index 9,8 being Chicks
+                      population_list[-3-index].species_name = "Chick" # Example of 10 , index 7,6 being Chicks
 
-            # Assigning Hens in the Group
-            for index in range (number_of_groups_the_swarm_is_divided, (population - 2*number_of_groups_the_swarm_is_divided)):
-                population_list[index].species_name = "Hen" # Example of 10 , index of 2,3,4,5 being Hens
+                # Assigning Hens in the Group
+                for index in range (number_of_groups_the_swarm_is_divided, (population - 2*number_of_groups_the_swarm_is_divided)):
+                    population_list[index].species_name = "Hen" # Example of 10 , index of 2,3,4,5 being Hens
 
-            '''
-                Based on the Total Population , The Population is divided into Group of 5 lets suppose. Now To each Group , We will have 1 Head Rooster , 2 Hens and 2 Chicks . Now , The Algorithm Validates to the  Position being Updated for each Row and The Validation successfully yields the nature Criteria for Identifying Weak as well as Strong . Thereby Performing Swarm Optimization
-            '''
+                '''
+                    Based on the Total Population , The Population is divided into Group of 5 lets suppose. Now To each Group , We will have 1 Head Rooster , 2 Hens and 2 Chicks . Now , The Algorithm Validates to the  Position being Updated for each Row and The Validation successfully yields the nature Criteria for Identifying Weak as well as Strong . Thereby Performing Swarm Optimization
+                '''
 
-            # In Example of 10 , With 2 Groups [ 0. , 0.  ]
-            roosters_in_each_group_counter = np.zeros(number_of_groups_the_swarm_is_divided)
-            hens_in_each_group_counter = np.zeros(number_of_groups_the_swarm_is_divided)
-            chicks_in_each_group_counter = np.zeros(number_of_groups_the_swarm_is_divided)
+                # In Example of 10 , With 2 Groups [ 0. , 0.  ]
+                roosters_in_each_group_counter = np.zeros(number_of_groups_the_swarm_is_divided)
+                hens_in_each_group_counter = np.zeros(number_of_groups_the_swarm_is_divided)
+                chicks_in_each_group_counter = np.zeros(number_of_groups_the_swarm_is_divided)
 
 
-            '''
-                To Assign Roosters and Hens And Chickens , We will Try to Randomize as much as Possible , failing of which will indicate the Gain of a particular group every Time , Thereby Hampering Our Solution.
-            '''
+                '''
+                    To Assign Roosters and Hens And Chickens , We will Try to Randomize as much as Possible , failing of which will indicate the Gain of a particular group every Time , Thereby Hampering Our Solution.
+                '''
 
-            # Assigning Roosters in the Group
+                # Assigning Roosters in the Group
 
-            for index in range(number_of_groups_the_swarm_is_divided): # For Example of 10 , The index 0 and 1, Since we have only 2 groups present
-                random_integer_between_the_total_number_of_groups_we_can_have_minus_1 = np.random.randint(0, number_of_groups_the_swarm_is_divided)
-
-                # Keeping Track that There is only One Rooster Avaiable in the Swarm
-                while roosters_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] >= 1:
+                for index in range(number_of_groups_the_swarm_is_divided): # For Example of 10 , The index 0 and 1, Since we have only 2 groups present
                     random_integer_between_the_total_number_of_groups_we_can_have_minus_1 = np.random.randint(0, number_of_groups_the_swarm_is_divided)
 
-                ## Putting it in an If statement , to Not Get any Undefined Declaration
-                if roosters_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] < 1 :
-                    population_list[index].group = random_integer_between_the_total_number_of_groups_we_can_have_minus_1 + 1 #Going into The Index of Object , Then Accessing Group and Updating It
-                    roosters_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] += 1 #Updating the Value at each Index ie in [0 , 0], if the random number is 1 then It will be [1, 0] for rooster count
-                    group_list_containing_which_group_belongs[index] = random_integer_between_the_total_number_of_groups_we_can_have_minus_1+1 #Updating The Group List to avoid Getting into each Object Properties to get the Group Number
+                    # Keeping Track that There is only One Rooster Avaiable in the Swarm
+                    while roosters_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] >= 1:
+                        random_integer_between_the_total_number_of_groups_we_can_have_minus_1 = np.random.randint(0, number_of_groups_the_swarm_is_divided)
 
-            ### Assigning The Hens and Relationship of Mother Hen with Chicks
-            '''
-                For Establishing a Relationship for Hen And Mother , We would keep track of the index of the Mother hen . Since we need to randomize the solution to predict an Optimized Result , Therefore we would Store it in an array to which the index belongs to .
-            '''
-            array_for_storing_index_of_particular_hen_to_which_the_chick_belongs_to = np.zeros(population)
+                    ## Putting it in an If statement , to Not Get any Undefined Declaration
+                    if roosters_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] < 1 :
+                        population_list[index].group = random_integer_between_the_total_number_of_groups_we_can_have_minus_1 + 1 #Going into The Index of Object , Then Accessing Group and Updating It
+                        roosters_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] += 1 #Updating the Value at each Index ie in [0 , 0], if the random number is 1 then It will be [1, 0] for rooster count
+                        group_list_containing_which_group_belongs[index] = random_integer_between_the_total_number_of_groups_we_can_have_minus_1+1 #Updating The Group List to avoid Getting into each Object Properties to get the Group Number
 
-
-            for index in range(number_of_groups_the_swarm_is_divided, 3*number_of_groups_the_swarm_is_divided): #2, 3, 4, 5 in case of Example 10
-                # For Assigining Each Group That We can Assign the Hen .
-                random_integer_between_the_total_number_of_groups_we_can_have_minus_1 = np.random.randint(0, number_of_groups_the_swarm_is_divided)
-
-                # Checking If the Not More than 2 Hens Exist In the same Group , In Our Case [ 0, 3] is not Possible
-                while hens_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] >= 2:
-                    random_integer_between_the_total_number_of_groups_we_can_have_minus_1= np.random.randint(0, number_of_groups_the_swarm_is_divided)
-
-
-                if hens_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] < 2 :
-                    population_list[index].group = random_integer_between_the_total_number_of_groups_we_can_have_minus_1 + 1 # Going into Index , then Updating the Property Group so That In case for our Example 0 and 1 become Group 1 and Group 2
-                    group_list_containing_which_group_belongs[index] = random_integer_between_the_total_number_of_groups_we_can_have_minus_1+1 # Updating the same in group list to make it easy for iterating in the later step
-                    hens_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] += 1 # Upating [0,0] to [1, 0]
-
+                ### Assigning The Hens and Relationship of Mother Hen with Chicks
                 '''
-                    The Next Process involves Mapping Mother Hen to Chicks in the Population , Therefore we Need to Randomize An Integer between 6, 7, 8, 9 , So that Mapping Occurs for Chicks and Not For Hens in the List
-
-                    6 = 3*(number_of_groups_the_swarm_is_divided)
-                    10 = 5*(number_of_groups_the_swarm_is_divided)
+                    For Establishing a Relationship for Hen And Mother , We would keep track of the index of the Mother hen . Since we need to randomize the solution to predict an Optimized Result , Therefore we would Store it in an array to which the index belongs to .
                 '''
-
-                random_integer_for_mapping_chicks[]
-
+                array_for_storing_index_of_particular_hen_to_which_the_chick_belongs_to = np.zeros(population)
 
 
-            print("Fitness is : ", population_list[iteration_test_cases].fitness)
+                for index in range(number_of_groups_the_swarm_is_divided, 3*number_of_groups_the_swarm_is_divided): #2, 3, 4, 5 in case of Example 10
+                    # For Assigining Each Group That We can Assign the Hen .
+                    random_integer_between_the_total_number_of_groups_we_can_have_minus_1 = np.random.randint(0, number_of_groups_the_swarm_is_divided)
+
+                    # Checking If the Not More than 2 Hens Exist In the same Group , In Our Case [ 0, 3] is not Possible
+                    while hens_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] >= 2:
+                        random_integer_between_the_total_number_of_groups_we_can_have_minus_1= np.random.randint(0, number_of_groups_the_swarm_is_divided)
+
+
+                    if hens_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] < 2 :
+                        population_list[index].group = random_integer_between_the_total_number_of_groups_we_can_have_minus_1 + 1 # Going into Index , then Updating the Property Group so That In case for our Example 0 and 1 become Group 1 and Group 2
+                        group_list_containing_which_group_belongs[index] = random_integer_between_the_total_number_of_groups_we_can_have_minus_1+1 # Updating the same in group list to make it easy for iterating in the later step
+                        hens_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] += 1 # Upating [0,0] to [1, 0]
+
+                    '''
+                        The Next Process involves Mapping Mother Hen to Chicks in the Population , Therefore we Need to Randomize An Integer between 6, 7, 8, 9 , So that Mapping Occurs for Chicks and Not For Hens in the List
+
+                        6 = 3*(number_of_groups_the_swarm_is_divided)
+                        10 = 5*(number_of_groups_the_swarm_is_divided)
+                    '''
+
+                    random_integer_for_mapping_chicks = np.random.randint(3*number_of_groups_the_swarm_is_divided,5*number_of_groups_the_swarm_is_divided)
+
+                    # Checking If the Chick is not already Mapped
+                    while (group_list_containing_which_group_belongs[random_integer_for_mapping_chicks] != 0) :
+                        random_integer_for_mapping_chicks=np.random.randint(3*number_of_groups_the_swarm_is_divided,5*number_of_groups_the_swarm_is_divided)
+
+                    while chicks_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] >= 2:
+                        random_integer_between_the_total_number_of_groups_we_can_have_minus_1= np.random.randint(0, number_of_groups_the_swarm_is_divided)
+
+                    # Error Zone :- Starts
+                    if chicks_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] < 2 :
+                        chicks_in_each_group_counter[random_integer_between_the_total_number_of_groups_we_can_have_minus_1] += 1
+                        group_list_containing_which_group_belongs[random_integer_for_mapping_chicks] = index ## New Error Zone
+                        population_list[random_integer_for_mapping_chicks].group = random_integer_between_the_total_number_of_groups_we_can_have_minus_1+1
+                    # Error Zone : Ends
+
+                print("Fitness is : ", population_list[iteration_test_cases].fitness)
+                print ("The Roosters Count is : ", roosters_in_each_group_counter, "The Hen Count is : ", hens_in_each_group_counter, "The Chick Count is ", chicks_in_each_group_counter)
+                print ("The Group List Looks like ", group_list_containing_which_group_belongs)
 
 
 
 
+            #### It Starts Here!!!!#####
             iteration_test_cases += 1
 
 
