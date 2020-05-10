@@ -288,9 +288,12 @@ class ImplementingChickenSwarmOptimization :
 
                 '''
                     The Next Process involves Mapping Mother Hen to Chicks in the Population , Therefore we Need to Randomize An Integer between 6, 7, 8, 9 , So that Mapping Occurs for Chicks and Not For Hens in the List
+
+                    6 = 3*(number_of_groups_the_swarm_is_divided)
+                    10 = 5*(number_of_groups_the_swarm_is_divided)
                 '''
 
-                
+                random_integer_for_mapping_chicks[]
 
 
 
