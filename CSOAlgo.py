@@ -18,6 +18,9 @@ def fitness_function (x):
          'x': Vector
          'N': Total Number of Features In The Dataset
     '''
+
+    print("The Group is as Follows : ", x[0])
+
     w = 0.00000001
     E = 0.00000002
     N = 32 # For an Example
@@ -187,9 +190,61 @@ class Chicken :
 
 '''
     The Class Takes 3 Arguments for the constructor , ie , The Population, Maximum Generation and Index to which Every Update Needs to Take Place to Establish A New Group .The Later Steps Involve Initalizing The Data and Make Segragation for Rooster, Hen And Chicken based on the Group .
-    
+
 '''
 
 
 class ImplementingChickenSwarmOptimization :
-    ###
+
+    ### Constructor
+
+    def __init__(self, population, maximum_generation, self_update_time, FL = 0.5 ):# int , int , int , float
+
+        # Initializing the total number of Groups for the Population , Appropriate Will be Population in Multiple of 10's and Dividing It in Multiple of 5
+        number_of_groups_the_swarm_is_divided = int (population/5)
+        print("The Number Of Group The Swarm Is Divided : ", number_of_groups_the_swarm_is_divided)
+
+        population_list = [] # List Storing the Object of Chicken .
+
+        for index in range (population):
+            population_list.append(Chicken())
+            population_list[index].evaluate()
+
+        iteration_test_cases = 0
+
+        while (iteration_test_cases < maximum_generation):
+
+            # Updation After Every Certain Time
+            if (iteration_test_cases%self_update_time == 0):
+                population_list.sort(key = lambda x : x.fitness , reverse = True)
+
+            # Assigning The Members Equally in a Group
+            rooster_class = population_list[:number_of_groups_the_swarm_is_divided] # Assigning Equal Number of Roosters to Each Group
+            chicks_class = population_list[-(2*number_of_groups_the_swarm_is_divided)] # Assigning the Last Remaining Classes as Chick
+            hens_class = population_list[-(population - number_of_groups_the_swarm_is_divided) : -(2*number_of_groups_the_swarm_is_divided)]
+
+            ### Group === Knowing Which Chicken Belongs to Which Group . Can Either be Done Through Going through each class and getting Group Number it Belongs to.
+
+            group_list_containing_which_group_belongs = np.zeros((population))
+
+            for index in range (number_of_groups_the_swarm_is_divided):
+                  population_list[index].species_name = "Rooster" # Example of 10, First  2 being Roosters
+                  population_list[-1-index].species_name = "Chick" # Example of 10 , index 9,8 being Chicks
+                  population_list[-3-index].species_name = "Chick" # Example of 10 , index 7,6 being Chicks
+
+            # Assigning Hens in the Group
+            for index in range (number_of_groups_the_swarm_is_divided, (population - 2*number_of_groups_the_swarm_is_divided)):
+                population_list[index].species_name = "Hen" # Example of 10 , index of 2,3,4,5 being Hens 
+
+
+
+
+            print("Fitness is : ", population_list[iteration_test_cases].fitness)
+
+
+
+
+            iteration_test_cases += 1
+
+
+ImplementingChickenSwarmOptimization(10, 10, 2, 0.5)
