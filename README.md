@@ -48,7 +48,7 @@ Contributions are what make the open source community such an amazing place to b
 <!-- CONTACT -->
 ## Contact Me
 
-**Rishabh Bhandari -** 
+**Deepankar Jain -** 
 
 [LinkedIn](https://www.linkedin.com/in/deepankar-jain-3997551a9/)
 
