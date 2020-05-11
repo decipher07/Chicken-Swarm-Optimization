@@ -30,7 +30,7 @@ pip install numpy
 ```
 3. Run using command:
 ```Python
-python app.js
+python CSOAlgo.py
 ```
 
 <!-- CONTRIBUTING -->
