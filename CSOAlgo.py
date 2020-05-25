@@ -6,7 +6,7 @@ import random
 '''
 
 # Defining the Total Noumber of Features in the Dataset
-Dn = 32
+Dn = int(input('Please Enter the Number Of Dataset Feature To Which You want To Apply Algorithm : '))
 
 def fitness_function (x):
 
@@ -365,5 +365,8 @@ class ImplementingChickenSwarmOptimization :
             iteration_test_cases += 1
 
 
-
-ImplementingChickenSwarmOptimization(10, 10, 2, 0.5)
+input_population = int(input('Enter The Total Population in Multiple of 5 or 10 or 15 !'))
+input_maximum_generation = int(input('Enter The Maximum Generation For The Population '))
+input_time_updation = int(input('Enter The Time For Updation Of Population '))
+input_a_value_between_for_mother_hen_and_chick_relationship = float(input('Enter A Close FL Value for Mother Hen and Chick Relationship '))
+ImplementingChickenSwarmOptimization(input_population, input_maximum_generation, input_time_updation, input_a_value_between_for_mother_hen_and_chick_relationship) # int, int , int , float
