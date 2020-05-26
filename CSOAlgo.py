@@ -15,14 +15,14 @@ def fitness_function (x):
          'w': Constant Controlling The Importance Of Classification
          'E': Classification Error
          'x': Vector
-         'N': Total Number of Features In The Dataset
+         'N': Total Number of Features In The Dataset To Which We Want To Apply The Algorithm
     '''
 
-    print("The Group is as Follows : ", x[0])
+    print("The Random Set is as Follows : ", x[0])
 
     w = 0.00000001
     E = 0.00000002
-    N = 32 # For an Example
+    N = Dn # For an Example
 
     sum = 0 # Sum For Countering The Total No Of Non Negative Numbers in The Dataset
 
@@ -208,7 +208,7 @@ class ImplementingChickenSwarmOptimization :
 
         # Initializing the total number of Groups for the Population , Appropriate Will be Population in Multiple of 10's and Dividing It in Multiple of 5
         number_of_groups_the_swarm_is_divided = int (population/5)
-        print("The Number Of Group The Swarm Is Divided : ", number_of_groups_the_swarm_is_divided)
+        print("\nThe Number Of Group The Swarm Is Divided : ", number_of_groups_the_swarm_is_divided)
 
         population_list = [] # List Storing the Object of Chicken .
 
@@ -314,7 +314,7 @@ class ImplementingChickenSwarmOptimization :
                     # Error Zone : Ends
 
                 for i in range (0, population):
-                    print ("Fitness is ", population_list[i].fitness)
+                    print ("\nFitness is ", population_list[i].fitness)
                 print ("The Roosters Count is : ", roosters_in_each_group_counter, "The Hen Count is : ", hens_in_each_group_counter, "The Chick Count is ", chicks_in_each_group_counter)
                 print ("The Group List Looks like ", group_list_containing_which_group_belongs)
 
@@ -330,13 +330,13 @@ class ImplementingChickenSwarmOptimization :
             for index in range (0, population):
 
                 if (population_list[index].species_name == "Rooster"):
-                    print("The Chicken is a Rooster at index ", index)
+                    print("\nThe Chicken is a Rooster at index ", index)
                     population_list[index].update_location_rooster(number_of_groups_the_swarm_is_divided, rooster_class)
                 elif (population_list[index].species_name == "Hen"):
-                    print("The Chicken is a Hen at index ", index)
+                    print("\nThe Chicken is a Hen at index ", index)
                     population_list[index].update_location_hen(number_of_groups_the_swarm_is_divided, rooster_class)
                 elif (population_list[index].species_name == "Chick"):
-                    print("The Chicken is a Chick at index ", index)
+                    print("\nThe Chicken is a Chick at index ", index)
                     mother_hen_index = int(group_list_containing_which_group_belongs[index])
                     position_of_mother_hen = population_list[mother_hen_index].original_position
 
@@ -354,10 +354,10 @@ class ImplementingChickenSwarmOptimization :
                         population_list[index].sample_chicken_comparing_stack[0][iteration_to_features] = 0
 
                 if fitness_function(population_list[index].sample_chicken_comparing_stack) > population_list[index].fitness:
-                    print("A Better Fitness Function is Found !!")
-                    print ("The Original Fitness Value for the ", population_list[index].fitness, " for the Solution as ", population_list[index].original_chicken_string)
+                    print("\n\nA Better Fitness Function is Found !!")
+                    print ("\nThe Original Fitness Value for the ", population_list[index].fitness, " for the Solution as ", population_list[index].original_chicken_string)
                     population_list[index].evaluate()
-                    print ("The Fittest One is as Follows ", population_list[index].original_chicken_string)
+                    print ("\nThe Fittest One is as Follows ", population_list[index].original_chicken_string)
                     ## Sorting For Finding If It Can Be the Best
                     population_list.sort(key = lambda x : x.fitness , reverse = True)
 
